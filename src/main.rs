@@ -1,61 +1,30 @@
-trait Animal {
-    fn new(name: &'static str) -> Self;
+struct Circle;
+struct Square;
 
-    fn name(&self) -> &'static str;
+trait Draw {
+    fn draw(&self);
+}
 
-    fn noise(&self) -> &'static str;
-
-    fn talk(&self) {
-        println!("{} says {}", self.name(), self.noise());
+impl Draw for Circle {
+    fn draw(&self) {
+        println!("circle");
     }
 }
 
-struct Cat {
-    name: &'static str,
-    age: i32
-}
-
-impl Animal for Cat {
-    fn new(name: &'static str) -> Self {
-        Cat { name, age: 1 }
-    }
-
-    fn name(&self) -> &'static str {
-        self.name
-    }
-
-    fn noise(&self) -> &'static str {
-        "Meowww"
-    }
-
-    fn talk(&self) {
-        println!("{} pauses briefly... {}", self.name, self.age)
+impl Draw for Square {
+    fn draw(&self) {
+        println!("square");
     }
 }
 
-struct Dog {
-    name: &'static str
-}
-
-impl Animal for Dog {
-    fn new(name: &'static str) -> Self {
-        Dog { name }
-    }
-
-    fn name(&self) -> &'static str {
-        self.name
-    }
-
-    fn noise(&self) -> &'static str {
-        "<random factory noise>"
-    }
+fn f(shape: &impl Draw) {
+    shape.draw();
 }
 
 fn main() {
-    let c: Cat = Animal::new("小猫");
-    println!("Cat's name is {} {}", c.name(), c.age);
-    c.talk();
+    let circle = Circle;
+    let square = Square;
 
-    let d: Dog = Animal::new("小狗xx");
-    d.talk();
+    f(&circle);
+    f(&square);
 }
