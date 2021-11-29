@@ -9,17 +9,19 @@ trait Draw {
 
 impl Draw for Circle {
     fn draw(&self) {
-        // println!("circle");
+        println!("circle");
     }
 }
 
 impl Draw for Square {
     fn draw(&self) {
-        // println!("square");
+        println!("square");
     }
 }
 
-fn f<T: Draw>(shape1: &T, shape2: &T) {
+type Drawable<'a> = &'a dyn Draw;
+
+fn f(shape1: Drawable, shape2: Drawable) {
     shape1.draw();
     shape2.draw();
 }
@@ -29,18 +31,22 @@ fn main() {
     // eg：&dyn Trait、Box<dyn Trait>。
     // 意思就是：只要一个类型实现了指定的trait(s)，即满足该约束
 
-    let start_time = SystemTime::now();
+    // let start_time = SystemTime::now();
 
-    let box_circle: Box<dyn Draw> = Box::new(Circle);
-    let box_square: Box<dyn Draw> = Box::new(Square);
+    // let box_circle: Box<dyn Draw> = Box::new(Circle);
+    // let box_square: Box<dyn Draw> = Box::new(Square);
 
-    let shapes: Vec<Box<dyn Draw>> = vec![box_circle, box_square];
+    // let shapes: Vec<Box<dyn Draw>> = vec![box_circle, box_square];
 
-    for _ in 0..20_000_000 as u64 {
-        for shape in shapes.iter() {
-            shape.draw();
-        }
-    }
+    // for _ in 0..20_000_000 as u64 {
+    //     for shape in shapes.iter() {
+    //         shape.draw();
+    //     }
+    // }
 
-    println!("use time: {}", start_time.elapsed().unwrap().as_millis());
+    let circle = Circle;
+    let square = Square;
+    f(&circle, &square);
+
+    // println!("use time: {}", start_time.elapsed().unwrap().as_millis());
 }
