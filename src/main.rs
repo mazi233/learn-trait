@@ -7,6 +7,7 @@ trait Draw {
     fn draw(&self);
 }
 
+// 加一行注释测试一下
 impl Draw for Circle {
     fn draw(&self) {
         println!("circle");
